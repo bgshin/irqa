@@ -15,7 +15,7 @@ def index_files(indexpath):
     writer.commit()
 
 
-def getSection(rawtxt, tag):
+def get_section(rawtxt, tag):
     rexp1 = "<%s>([\\S\\s]*?)</%s>" % (tag, tag)
     re_exp = re.compile(rexp1, re.DOTALL)
     section = []
@@ -26,15 +26,15 @@ def getSection(rawtxt, tag):
 
 
 def get_text(rawtext):
-    text = getSection(rawtext, "TEXT")
+    text = get_section(rawtext, "TEXT")
     if len(text) == 0:
-        text = getSection(rawtext, "DATELINE")
+        text = get_section(rawtext, "DATELINE")
         if len(text) == 0:
-            text = getSection(rawtext, "GRAPHIC")
+            text = get_section(rawtext, "GRAPHIC")
             if len(text) == 0:
-                text = getSection(rawtext, "CORRECTION")
+                text = get_section(rawtext, "CORRECTION")
                 if len(text) == 0:
-                    text = getSection(rawtext, "HEADLINE")
+                    text = get_section(rawtext, "HEADLINE")
 
     return text
 
@@ -53,12 +53,12 @@ def batch_index(datapath, indexpath):
             fname = os.path.join(root, f)
             with open(fname, 'r') as fh:
                 rawdata = fh.read()
-                document = getSection(rawdata, "DOC")
+                document = get_section(rawdata, "DOC")
                 for d in document:
                     num_scan = num_scan+1
-                    docid = getSection(d, "DOCNO")
+                    docid = get_section(d, "DOCNO")
                     if len(docid) == 0:
-                        docid = getSection(d, "DOCID")
+                        docid = get_section(d, "DOCID")
 
                     if len(docid) == 0:
                         continue
@@ -71,15 +71,16 @@ def batch_index(datapath, indexpath):
                     else:
                         text_add = text[0]
 
-                    headlines = getSection(d, "HEADLINE")
+                    headlines = get_section(d, "HEADLINE")
                     if len(headlines) == 0:
                         headlines_add = ""
                     else:
                         headlines_add = headlines[0]
 
                     print docid_add
-                    writer.add_document(headline=unicode(headlines_add), path=unicode(docid_add),
-                                        content=unicode(text_add))
+                    writer.add_document(headline=unicode(headlines_add, errors='replace'),
+                                        path=unicode(docid_add, errors='replace'),
+                                        content=unicode(text_add, errors='replace'))
                     num_index = num_index+1
 
     writer.commit()
