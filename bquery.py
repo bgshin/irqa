@@ -2,11 +2,12 @@ from whoosh.qparser import QueryParser
 import whoosh.index as index
 import argparse
 
+
 def query(indexpath):
     ix = index.open_dir(indexpath)
 
     with ix.searcher() as searcher:
-        query = QueryParser("content", ix.schema).parse("first")
+        query = QueryParser("content", ix.schema).parse("test")
         results = searcher.search(query)
         print results[0]
 
