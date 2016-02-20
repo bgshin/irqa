@@ -2,6 +2,29 @@ from whoosh.index import create_in
 from whoosh.fields import *
 import argparse
 import os
+import time
+import logging
+
+
+class Timer(object):
+    def __init__(self, name=None, logger=None):
+        self.logger = logger
+        self.name = name
+
+    def __enter__(self):
+        self.tstart = time.time()
+
+    def __exit__(self, type, value, traceback):
+        if self.logger is None:
+            if self.name:
+                print '[%s]' % self.name,
+            print 'Elapsed: %s' % (time.time() - self.tstart)
+
+        else:
+            if self.name:
+                self.logger.info("[%s] Elapsed: %s" % (self.name, (time.time() - self.tstart)))
+            else:
+                self.logger.info('Elapsed: %s' % (time.time() - self.tstart))
 
 
 def index_files(indexpath):
@@ -91,8 +114,13 @@ if __name__ == "__main__":
     parser.add_argument("datapath")
     parser.add_argument("indexpath")
     args = parser.parse_args()
+    program = os.path.basename(sys.argv[0])
+    logger = logging.getLogger(program)
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s')
+    logging.root.setLevel(level=logging.INFO)
 
-    batch_index(args.datapath, args.indexpath)
+    with Timer("indexing", logger):
+        batch_index(args.datapath, args.indexpath)
 
 
 
