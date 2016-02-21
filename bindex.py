@@ -63,7 +63,8 @@ def get_text(rawtext):
 
 
 def batch_index(datapath, indexpath):
-    schema = Schema(headline=TEXT(stored=True), path=ID(stored=True), content=TEXT)
+    schema = Schema(headline=TEXT(stored=False), path=ID(stored=True), content=TEXT(stored=False))
+
     ix = create_in(indexpath, schema)
     writer = ix.writer()
 
