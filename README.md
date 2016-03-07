@@ -10,11 +10,13 @@ IR based question answering
 ```bash
 virtualenv irqa
 source irqa/bin/activate
-pip install -r requirements.txt
+pip install cython
 wget https://github.com/kivy/pyjnius/archive/master.zip
 unzip master.zip
 cd pyjnius-master
 python setup.py install
+cd ..
+rm -rf pyjnius-master
 ```
 
 * Later on

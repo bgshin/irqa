@@ -9,7 +9,7 @@ import json
 luceneInterface = autoclass('luceneInterface')
 
 index="./index/"
-stopwords="/Users/bong/IdeaProjects/luceneInterface/stopwords.txt"
+stopwords="./stopwords.txt"
 
 answercount=0
 questioncount=0

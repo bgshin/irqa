@@ -10,7 +10,7 @@ Stack = autoclass('java.util.Stack')
 luceneInterface = autoclass('luceneInterface')
 
 index="./index/"
-stopwords="/Users/bong/IdeaProjects/luceneInterface/stopwords.txt"
+stopwords="./stopwords.txt"
 
 luceneInterface.makeIndexWriter(index, stopwords)
 
