@@ -28,8 +28,6 @@ source irqa/bin/activate
 ### Dataset
 * place documents.json and questions.json in {project_root}/data
 
-### Jar file
-* place luceneInterface.jar in {project_root}/lib
 
 
 ## Usage
@@ -52,3 +50,7 @@ python bindex.py [datapath] [indexpath]
 # index:example
 python bindex.py /home/jack/text  /home/jack/indexdir
 ```
+
+## Jar file
+* luceneInterface.jar is compiled from [the lucene python interface project](https://github.com/bgshin/luceneInterface)
+
